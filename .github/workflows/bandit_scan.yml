@@ -23,4 +23,6 @@ jobs:
         pip install bandit  # Install Bandit explicitly
     - name: Run Bandit
       run: |
-        bandit -r . -c .bandit_scan.yml --output bandit_report.html --format html
+        bandit -r . -c .github/workflows/bandit_scan.yml --output bandit_report.html --format html
+
+
