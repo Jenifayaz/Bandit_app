@@ -24,6 +24,12 @@ jobs:
     - name: Run Bandit
       run: |
           bandit -r . -c .github/workflows/bandit_scan.yml --output bandit_report.html --format html || true
+      - name: Upload Bandit Report
+        uses: actions/upload-artifact@v3
+        with:
+        name: Bandit Report
+        path: bandit_report.html
+
 
     
 
