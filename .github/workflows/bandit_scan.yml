@@ -1,41 +1,27 @@
-name: Bandit Security Scan
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+name: Python Security Scan
+
+on: [push, pull_request]
+
 jobs:
-  bandit-scan:
+  bandit_scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      
+      - name: Checkout Code
+        uses: actions/checkout@latest
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@latest
         with:
-          python-version: 3.x
-      
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install bandit  
-      
+          python-version: '3.x'
+
+      - name: Install Bandit
+        run: pip install bandit
+
       - name: Run Bandit
-        run: |
-          bandit -r . -c .github/workflows/bandit_scan.yml --output bandit_report.html --format html || true
-      
-      - name: Upload Bandit Report
-        uses: actions/upload-artifact@v3
+        run: bandit -r . -f txt -o bandit-report.txt
+
+      - name: Upload Report
+        uses: actions/upload-artifact@latest
         with:
           name: Bandit Report
-          path: bandit_report.html
-
-
-
-
-    
-
+          path: bandit-report.txt
